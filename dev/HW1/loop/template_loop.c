@@ -7,13 +7,50 @@ LANG: C
 #include <string.h>
 #define BLOCK_SIZE 128
 
+const char * enc (char *string, size_t length){
+  if (length < 2){
+        return string;
+  }
+  size_t N = length;
+  size_t k = N/2;
+  char left_side[k]; //split left
+  char right_side[N-k]; //split right
+  
+  // Assign left_side = [s_k, s_k-1, ... , s1]
+  for(size_t i = 0; i < k; i++){
+    left_side[i] = string[k-i];
+  }
+  
+  // Assign right_side = [s_N, s_N-1, ... , s_k+1]
+  for(size_t i = 0; i < k; i++){  
+    right_side[i] = string[N-i]; 
+  }  
+  
+  strcat(left_side, right_side);
+  printf("The string is now: %s, its lenght is:%zu\n", left_side, length);
+  return string;//left_side;
+    //split left
+    //split right
+    // apply backwards assigning using while loop
+    // add them recusrively calling the function.
+    // call the function again
+    //strcat(lh
+
+}
+
 void encrypt( char *string, size_t length ) {
   printf("String is: %s\n", string);
   printf("its length is: %zu\n", length);
+  
+  
+  //char tmp[length] = enc(string, length);
+  enc(string, length);
+
   /* This is the encryption function;
    * Fill this out!
    */
 }
+
 
 /* Resize a string using realloc;
  * if realloc fails, do not change the string.
@@ -101,7 +138,7 @@ size_t getstr( char **str, FILE *input ) {
       *str = tmp;
     }
   }
-  return length;
+ return length;
 }
 
 int main(void) {

@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char str[10] = {'a','b'};
+
+int main(void){
+  //  FILE *fout = fopen( "hello.out", "w");
+  //fprintf( fout, "Hello, world!\n" );
+  //fclose( fout);
+  printf("length of string is %zu", strlen( str ));
+  
+  return 0;
+}
+

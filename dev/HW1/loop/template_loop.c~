@@ -67,14 +67,13 @@ size_t getstr( char **str, FILE *input ) {
   while( ( chars = fread( *str + length, 1, chars_to_read, input ) ) ) {
 
     size_t used_bytes = chars + length;
-    length = strlen( *str );
-    printf("length right now is:%zu", length);
+
     if (chars < chars_to_read){
       resize_string(str, used_bytes); //Resize exactly to the amount of bytes used.
       break;
     }
-
-
+    length = strlen( *str );
+    printf("length right now is:%zu", length);
     
     chars_to_read <<= 1;
     resize_string(str, chars_to_read << 1);

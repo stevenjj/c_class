@@ -7,27 +7,48 @@ LANG: C
 #include <string.h>
 #define BLOCK_SIZE 128
 
+void resize_string( char **str, size_t newsize );
+
 const char * enc (char *string, size_t length){
   if (length < 2){
         return string;
   }
   size_t N = length;
   size_t k = N/2;
-  char left_side[k]; //split left
-  char right_side[N-k]; //split right
-  
+
+  char *left_side = malloc(k * sizeof(char)); //split left
+  char *right_side = malloc( (N-k) * sizeof(char)); //split right
+  printf("left side length = %zu, right side length = %zu\n", strlen(left_side), strlen(right_side));
+  printf("N = %zu\n",N);
+  printf("k = %zu\n",k);
+
   // Assign left_side = [s_k, s_k-1, ... , s1]
   for(size_t i = 0; i < k; i++){
-    left_side[i] = string[k-i];
+    left_side[i] = string[k-1-i];
   }
   
   // Assign right_side = [s_N, s_N-1, ... , s_k+1]
-  for(size_t i = 0; i < k; i++){  
-    right_side[i] = string[N-i]; 
+  for(size_t i = 0; i < (N-k); i++){  
+    right_side[i] = string[N-1-i]; 
   }  
   
+  resize_string(&left_side, N);
   strcat(left_side, right_side);
-  printf("The string is now: %s, its lenght is:%zu\n", left_side, length);
+
+  //  strcpy(tmp, left_side);
+
+  printf("Before: %s, left side is: %s, right side is: %s, its lenght is:%zu\n", string, left_side, right_side, length);
+  //  printf("left side length = %zu, right side length = %zu\n", strlen(left_side), strlen(right_side));
+  printf("k = %zu\n",k);
+
+for(size_t i = 0; i < N; i++){  
+  string[i] = left_side[i];
+ }
+
+  free(left_side);
+  free(right_side);
+
+  
   return string;//left_side;
     //split left
     //split right
@@ -37,6 +58,7 @@ const char * enc (char *string, size_t length){
     //strcat(lh
 
 }
+
 
 void encrypt( char *string, size_t length ) {
   printf("String is: %s\n", string);
@@ -105,7 +127,7 @@ size_t getstr( char **str, FILE *input ) {
 
     size_t used_bytes = chars + length;
     length = strlen( *str );
-    printf("length right now is:%zu", length);
+
     if (chars < chars_to_read){
       resize_string(str, used_bytes); //Resize exactly to the amount of bytes used.
       break;
@@ -127,6 +149,9 @@ size_t getstr( char **str, FILE *input ) {
      * ways of doing this and pick the fastest one. DO NOT LEAK MEMORY!
      */
   }
+
+    length = strlen( *str );
+    //    printf("string is:%s, length right now is:%zu\n", *str,  length);
 
   // Add a terminating '\0' (removing the final newline)
   // and resize to save space

@@ -9,8 +9,9 @@ LANG: C
 
 void resize_string( char **str, size_t newsize );
 
-const char * enc (char *string, size_t length){
-  if (length < 2){
+char * enc (char *string, size_t length){
+  if (length <= 2){
+    //printf("string=%s, length = %zu\n", string,length);
         return string;
   }
   size_t N = length;
@@ -18,10 +19,7 @@ const char * enc (char *string, size_t length){
 
   char *left_side = malloc(k * sizeof(char)); //split left
   char *right_side = malloc( (N-k) * sizeof(char)); //split right
-  printf("left side length = %zu, right side length = %zu\n", strlen(left_side), strlen(right_side));
-  printf("N = %zu\n",N);
-  printf("k = %zu\n",k);
-
+  
   // Assign left_side = [s_k, s_k-1, ... , s1]
   for(size_t i = 0; i < k; i++){
     left_side[i] = string[k-1-i];
@@ -31,16 +29,15 @@ const char * enc (char *string, size_t length){
   for(size_t i = 0; i < (N-k); i++){  
     right_side[i] = string[N-1-i]; 
   }  
+  //printf("string:%s, left side is: %s, right side is: %s, its lenght is:%zu\n",string, left_side, right_side, length);  
   
+  left_side = enc(left_side, strlen(left_side));
+  right_side = enc(right_side, strlen(right_side));
   resize_string(&left_side, N);
   strcat(left_side, right_side);
 
-  //  strcpy(tmp, left_side);
-
-  printf("Before: %s, left side is: %s, right side is: %s, its lenght is:%zu\n", string, left_side, right_side, length);
-  //  printf("left side length = %zu, right side length = %zu\n", strlen(left_side), strlen(right_side));
-  printf("k = %zu\n",k);
-
+  
+  
 for(size_t i = 0; i < N; i++){  
   string[i] = left_side[i];
  }
@@ -48,8 +45,9 @@ for(size_t i = 0; i < N; i++){
   free(left_side);
   free(right_side);
 
-  
-  return string;//left_side;
+  printf("string:%s\n", string);
+  return string;
+    //left_side;
     //split left
     //split right
     // apply backwards assigning using while loop
@@ -61,12 +59,10 @@ for(size_t i = 0; i < N; i++){
 
 
 void encrypt( char *string, size_t length ) {
-  printf("String is: %s\n", string);
-  printf("its length is: %zu\n", length);
+  //printf("String is: %s\n", string);
+  //printf("its length is: %zu\n", length);
   
-  
-  //char tmp[length] = enc(string, length);
-  enc(string, length);
+  string = enc(string, length);
 
   /* This is the encryption function;
    * Fill this out!

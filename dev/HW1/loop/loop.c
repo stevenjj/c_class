@@ -9,6 +9,7 @@ LANG: C
 
 void resize_string( char **str, size_t newsize );
 
+
 char * enc (char *string, size_t length){
   if (length <= 2){
     //printf("string=%s, length = %zu\n", string,length);
@@ -35,8 +36,6 @@ char * enc (char *string, size_t length){
   right_side = enc(right_side, strlen(right_side));
   resize_string(&left_side, N);
   strcat(left_side, right_side);
-
-  
   
 for(size_t i = 0; i < N; i++){  
   string[i] = left_side[i];
@@ -58,11 +57,41 @@ for(size_t i = 0; i < N; i++){
 }
 
 
-void encrypt( char *string, size_t length ) {
-  //printf("String is: %s\n", string);
-  //printf("its length is: %zu\n", length);
+char * encrypt( char *string, size_t length ) {
+  if (length <= 2){
+    //printf("string=%s, length = %zu\n", string,length);
+        return string;
+  }
+  size_t N = length;
+  size_t k = N/2;
+  char holder[1];
   
-  string = enc(string, length);
+
+ // Assign left_side = [s_k, s_k-1, ... , s1]
+  for(size_t i = 0; i < k/2; i++){
+    holder[0] = string[i];
+    string[i] = string[k-1-i];
+    //  printf("string=%s, length = %zu\n", string,length);
+    string[k-1-i] = holder[0];
+  }
+  // Assign right_side = [s_N, s_N-1, ... , s_k+1]
+   for(size_t i = 0; i < (N-k)/2; i++){  
+      holder[0] = string[i+k];
+      string[i+k] = string[N-1-i]; 
+      string[N-1-i] = holder[0];
+      //printf("string=%s, length = %zu\n", string,length);      
+  }  
+  
+   //   size_t N_size = N;
+   // N_size >>= 7;
+   //   while (N_size>0){
+          encrypt(&string[0], k);
+	  encrypt(&string[k], N-k);
+	  //            N_size>>=1;
+	  // }
+  
+	  //  printf("string=%s, length = %zu\n", string,length);
+  return string;
 
   /* This is the encryption function;
    * Fill this out!

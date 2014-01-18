@@ -122,7 +122,14 @@ void list_delete( List *list, int value ) {
 }
 
 // Implement this
-//void list_apply( List *list, int (*function_ptr)(int) ) {
+void list_apply( List *list, int (*function_ptr)(int) ) {
+  List_node *current_node = list->front;
+
+  while (current_node != NULL){
+    current_node->value = function_ptr(current_node->value);    
+    current_node = current_node->next;
+  }
+
   /* Applies the function pointed to by function_ptr
    * to every value at nodes in list 'list'.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -133,11 +140,11 @@ void list_delete( List *list, int value ) {
    * call to list_apply( list, sq );
    * results in { 1 -> 4 -> 9 }
    */
-//}
+  }
 
 
 
-// int list_reduce( List *list, int (*function_ptr)(int, int) ) {
+ int list_reduce( List *list, int (*function_ptr)(int, int) ) {
   /* Takes an associative function pointed to by function_ptr
    * and returns the result of reducing the list with it.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -148,8 +155,17 @@ void list_delete( List *list, int value ) {
    * list_reduce( list, plus );
    * will return 1 + 2 + 3 = 6.
    */
-//  return result;
-//}
+   int result = 0;
+   List_node *current_node = list->front;
+   while (current_node != NULL){
+     int y = 0;
+     y = current_node->value;
+     result = function_ptr(result,y);
+     current_node = current_node->next;
+   }
+
+  return result;
+}
 // DONT FORGET TO UNCOMMENT THIS
 
 

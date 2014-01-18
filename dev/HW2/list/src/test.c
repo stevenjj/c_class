@@ -21,8 +21,11 @@ int main(void) {
   list_print( list );
 
   list_delete( &list, 4);
-
+  list_apply( &list,  &sq);
   list_print( list );
+
+  printf("result = %d\n", list_reduce( &list, &plus));
+
   list_clear( &list );
   return 0;
 }

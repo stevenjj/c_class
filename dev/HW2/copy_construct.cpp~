@@ -1,0 +1,9 @@
+
+
+Array::Array( const Array& rhs)
+  : _size{rhs._size}, _elem{nullptr} { // Initializer list
+    _elem = new int[_size];
+    for( size_t i = 0; i < _size; ++i){
+      _elem[i] = rhs._elem[i];
+    }
+      

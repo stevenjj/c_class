@@ -89,7 +89,17 @@ void list_insert_before( List *list, int insert, int before ) {
 } // Function end
 
 // Implement this
-//void list_delete( List *list, int value ) {
+void list_delete( List *list, int value ) {
+  List_node *current_node = list->front;
+
+  if (current_node != NULL){
+    if (current_node->value == value){     // Handle the front of the list
+      List_node *next_node = current_node_next;
+      free( current_node );
+      list->front = next_node;
+      list->length -= 1;      
+    }
+  }
   /* Delete all occurrences of the value 'value' in list.
    * For example, starting with { 0 -> 5 -> 4 -> 5 }
    * call list_delete( list, 5 ):
@@ -97,7 +107,7 @@ void list_insert_before( List *list, int insert, int before ) {
    * If there are no values to delete, the function should
    * do nothing.
    */
-//}
+}
 
 // Implement this
 //void list_apply( List *list, int (*function_ptr)(int) ) {

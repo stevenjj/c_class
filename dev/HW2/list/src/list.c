@@ -46,7 +46,7 @@ void list_append( List *list, int value ) {
 
 
 // Implement this
-//void list_insert_before( List *list, int insert, int before ) {
+void list_insert_before( List *list, int insert, int before ) {
   /* This function should take a pointer to a List *list,
    * a value to insert 'insert', and a value to insert before 'before'.
    * A new node should be inserted directly before the first
@@ -58,7 +58,33 @@ void list_append( List *list, int value ) {
    * NOTE: if the value 'before' does not exist in 'list', this
    * function should not modify the list or append anywhere.
    */
-//}
+  List_node *current_node = list->front;
+
+  if (current_node != NULL){
+    // Handle front of List
+    if(current_node->value == before){
+      List_node *new_node = create_node(insert); // Create new node
+      new_node->next = current_node;
+      list->front = new_node;
+      
+    }
+    else{
+      // Handle the rest of the list
+      while(current_node->next != NULL){
+	if (current_node->value == before){
+	  // Code to redirect pointers
+	  List_node *before_node = current_node->next; //Save original next node
+	  current_node->next = create_node(insert); // insert new node
+	  current_node->next->next = before_node; // restore ptr to next node
+	  break; // insert before is successful, exit loop 
+	}
+	current_node = current_node->next; 	// 'before' hasn't been found. Go to the next node.
+      }
+    }
+
+  }
+
+} // Function end
 
 // Implement this
 //void list_delete( List *list, int value ) {

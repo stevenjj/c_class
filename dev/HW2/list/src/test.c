@@ -16,6 +16,7 @@ int main(void) {
   for( int i = 0; i < N; ++i ) {
     list_append( &list, i );
   }
+  list_insert_before( &list, 10,3);
 
   list_print( list );
   list_clear( &list );

@@ -71,11 +71,12 @@ void list_insert_before( List *list, int insert, int before ) {
     else{
       // Handle the rest of the list
       while(current_node->next != NULL){
-	if (current_node->value == before){
+	if (current_node->next->value == before){
 	  // Code to redirect pointers
 	  List_node *before_node = current_node->next; //Save original next node
 	  current_node->next = create_node(insert); // insert new node
 	  current_node->next->next = before_node; // restore ptr to next node
+	  list->length += 1;
 	  break; // insert before is successful, exit loop 
 	}
 	current_node = current_node->next; 	// 'before' hasn't been found. Go to the next node.

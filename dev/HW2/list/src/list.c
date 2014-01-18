@@ -91,13 +91,23 @@ void list_insert_before( List *list, int insert, int before ) {
 // Implement this
 void list_delete( List *list, int value ) {
   List_node *current_node = list->front;
-
   if (current_node != NULL){
-    if (current_node->value == value){     // Handle the front of the list
-      List_node *next_node = current_node_next;
-      free( current_node );
-      list->front = next_node;
-      list->length -= 1;      
+    // Handle the front of the list
+    if (current_node->value == value){  
+      List_node *next_node = current_node->next;  
+      free( current_node ); // Free memory
+      list->front = next_node; // Reassign new front
+      list->length -= 1;       
+    }
+    // Handle the rest of the list
+    while(current_node->next != NULL){
+      if(current_node->next->value == value){
+	List_node *true_next_node = current_node->next->next;
+	free ( current_node->next ); // Delete the node.
+	current_node->next = true_next_node; // Point to the actual next node
+	list->length -= 1;
+      }
+      current_node = current_node->next;
     }
   }
   /* Delete all occurrences of the value 'value' in list.

@@ -16,7 +16,11 @@ int main(void) {
   for( int i = 0; i < N; ++i ) {
     list_append( &list, i );
   }
+  list_print( list );
   list_insert_before( &list, 10,0);
+  list_print( list );
+
+  list_delete( &list, 3);
 
   list_print( list );
   list_clear( &list );

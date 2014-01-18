@@ -29,9 +29,8 @@ void list_append( List *list, int value ) {
    * { 5 -> 10 -> 9 }
    */
   List_node *current_node = list->front; 
-  size_t length = list->length;
   if (list->front == NULL){
-    list->front->value = create_node(value);
+    list->front = create_node(value);
     list->length += 1;
   } 
   else {  
@@ -39,14 +38,15 @@ void list_append( List *list, int value ) {
     while(current_node->next != NULL){
       current_node = current_node->next;
     }
-    current_node-> = create_node(value); //
+    current_node->next = create_node(value); //
     list->length +=1;
   }
   
 }
 
+
 // Implement this
-void list_insert_before( List *list, int insert, int before ) {
+//void list_insert_before( List *list, int insert, int before ) {
   /* This function should take a pointer to a List *list,
    * a value to insert 'insert', and a value to insert before 'before'.
    * A new node should be inserted directly before the first
@@ -58,10 +58,10 @@ void list_insert_before( List *list, int insert, int before ) {
    * NOTE: if the value 'before' does not exist in 'list', this
    * function should not modify the list or append anywhere.
    */
-}
+//}
 
 // Implement this
-void list_delete( List *list, int value ) {
+//void list_delete( List *list, int value ) {
   /* Delete all occurrences of the value 'value' in list.
    * For example, starting with { 0 -> 5 -> 4 -> 5 }
    * call list_delete( list, 5 ):
@@ -69,10 +69,10 @@ void list_delete( List *list, int value ) {
    * If there are no values to delete, the function should
    * do nothing.
    */
-}
+//}
 
 // Implement this
-void list_apply( List *list, int (*function_ptr)(int) ) {
+//void list_apply( List *list, int (*function_ptr)(int) ) {
   /* Applies the function pointed to by function_ptr
    * to every value at nodes in list 'list'.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -83,9 +83,11 @@ void list_apply( List *list, int (*function_ptr)(int) ) {
    * call to list_apply( list, sq );
    * results in { 1 -> 4 -> 9 }
    */
-}
+//}
 
-int list_reduce( List *list, int (*function_ptr)(int, int) ) {
+
+
+// int list_reduce( List *list, int (*function_ptr)(int, int) ) {
   /* Takes an associative function pointed to by function_ptr
    * and returns the result of reducing the list with it.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -96,8 +98,10 @@ int list_reduce( List *list, int (*function_ptr)(int, int) ) {
    * list_reduce( list, plus );
    * will return 1 + 2 + 3 = 6.
    */
-  return result;
-}
+//  return result;
+//}
+// DONT FORGET TO UNCOMMENT THIS
+
 
 // Print out a linked list in human-readable form
 void list_print( List list ) {

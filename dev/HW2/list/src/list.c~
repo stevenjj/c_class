@@ -28,6 +28,21 @@ void list_append( List *list, int value ) {
    * list_append( list, 9 ); results in
    * { 5 -> 10 -> 9 }
    */
+  List_node *current_node = list->front; 
+  size_t length = list->length;
+  if (list->front == NULL){
+    list->front = create_node(value);
+    list->length += 1;
+  } 
+  else {  
+    // Keep going down the list until we hit a null.
+    while(current_node->next != NULL){
+      current_node = current_node->next;
+    }
+    current_node = create_node(value); //
+    list->length +=1;
+  }
+  
 }
 
 // Implement this
@@ -70,7 +85,8 @@ void list_apply( List *list, int (*function_ptr)(int) ) {
    */
 }
 
-int list_reduce( List *list, int (*function_ptr)(int, int) ) {
+
+// int list_reduce( List *list, int (*function_ptr)(int, int) ) {
   /* Takes an associative function pointed to by function_ptr
    * and returns the result of reducing the list with it.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -81,8 +97,10 @@ int list_reduce( List *list, int (*function_ptr)(int, int) ) {
    * list_reduce( list, plus );
    * will return 1 + 2 + 3 = 6.
    */
-  return result;
-}
+//  return result;
+//}
+// DONT FORGET TO UNCOMMENT THIS
+
 
 // Print out a linked list in human-readable form
 void list_print( List list ) {

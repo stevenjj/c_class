@@ -29,7 +29,6 @@ void list_append( List *list, int value ) {
    * { 5 -> 10 -> 9 }
    */
   List_node *current_node = list->front; 
-  size_t length = list->length;
   if (list->front == NULL){
     list->front = create_node(value);
     list->length += 1;
@@ -39,11 +38,12 @@ void list_append( List *list, int value ) {
     while(current_node->next != NULL){
       current_node = current_node->next;
     }
-    current_node = create_node(value); //
+    current_node->next = create_node(value); //
     list->length +=1;
   }
   
 }
+
 
 // Implement this
 void list_insert_before( List *list, int insert, int before ) {
@@ -58,10 +58,61 @@ void list_insert_before( List *list, int insert, int before ) {
    * NOTE: if the value 'before' does not exist in 'list', this
    * function should not modify the list or append anywhere.
    */
-}
+  List_node *current_node = list->front;
+
+  if (current_node != NULL){
+    // Handle front of List
+    if(current_node->value == before){
+      List_node *new_node = create_node(insert); // Create new node
+      new_node->next = current_node;
+      list->front = new_node;
+      list->length += 1;
+      
+    }
+    else{
+      // Handle the rest of the list
+      while(current_node->next != NULL){
+	if (current_node->next->value == before){
+	  // Code to redirect pointers
+	  List_node *before_node = current_node->next; //Save original next node
+	  current_node->next = create_node(insert); // insert new node
+	  current_node->next->next = before_node; // restore ptr to next node
+	  list->length += 1;
+	  break; // insert before is successful, exit loop 
+	}
+	current_node = current_node->next; 	// 'before' hasn't been found. Go to the next node.
+      }
+    }
+
+  }
+
+} // Function end
 
 // Implement this
 void list_delete( List *list, int value ) {
+  List_node *current_node = list->front;
+  if (current_node != NULL){
+    // Handle the front of the list
+    if (current_node->value == value){  
+      List_node *next_node = current_node->next;  
+      free( current_node ); // Free memory
+      list->front = next_node; // Reassign new front
+      list->length -= 1;       
+    }
+    // Handle the rest of the list
+    while(current_node->next != NULL){
+      if(current_node->next->value == value){
+	List_node *true_next_node = current_node->next->next;
+	free ( current_node->next ); // Delete the node.
+	current_node->next = true_next_node; // Point to the actual next node
+
+	list->length -= 1;
+      }
+      if (current_node->next != NULL){
+	current_node = current_node->next;
+      }
+    }
+  }
   /* Delete all occurrences of the value 'value' in list.
    * For example, starting with { 0 -> 5 -> 4 -> 5 }
    * call list_delete( list, 5 ):
@@ -72,7 +123,7 @@ void list_delete( List *list, int value ) {
 }
 
 // Implement this
-void list_apply( List *list, int (*function_ptr)(int) ) {
+//void list_apply( List *list, int (*function_ptr)(int) ) {
   /* Applies the function pointed to by function_ptr
    * to every value at nodes in list 'list'.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -83,7 +134,8 @@ void list_apply( List *list, int (*function_ptr)(int) ) {
    * call to list_apply( list, sq );
    * results in { 1 -> 4 -> 9 }
    */
-}
+//}
+
 
 
 // int list_reduce( List *list, int (*function_ptr)(int, int) ) {

@@ -17,10 +17,10 @@ int main(void) {
     list_append( &list, i );
   }
   list_print( list );
-  list_insert_before( &list, 10,0);
+  list_insert_before( &list, 100,4);
   list_print( list );
 
-  list_delete( &list, 3);
+  list_delete( &list, 4);
 
   list_print( list );
   list_clear( &list );

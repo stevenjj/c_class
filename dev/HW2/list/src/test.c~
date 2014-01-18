@@ -20,7 +20,7 @@ int main(void) {
   list_insert_before( &list, 10,0);
   list_print( list );
 
-  list_delete( &list, 10);
+  list_delete( &list, 3);
 
   list_print( list );
   list_clear( &list );

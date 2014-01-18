@@ -107,7 +107,9 @@ void list_delete( List *list, int value ) {
 	current_node->next = true_next_node; // Point to the actual next node
 	list->length -= 1;
       }
-      current_node = current_node->next;
+      if (current_node->next != NULL){
+	current_node = current_node->next;
+      }
     }
   }
   /* Delete all occurrences of the value 'value' in list.

@@ -66,6 +66,7 @@ void list_insert_before( List *list, int insert, int before ) {
       List_node *new_node = create_node(insert); // Create new node
       new_node->next = current_node;
       list->front = new_node;
+      list->length += 1;
       
     }
     else{

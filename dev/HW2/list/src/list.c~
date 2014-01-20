@@ -93,25 +93,37 @@ void list_delete( List *list, int value ) {
   List_node *current_node = list->front;
   if (current_node != NULL){
     // Handle the front of the list
-    if (current_node->value == value){  
-      List_node *next_node = current_node->next;  
+    while (current_node->value == value){  
+      List_node * next_node = (current_node->next);  
       free( current_node ); // Free memory
+      //      printf("hello1");
       list->front = next_node; // Reassign new front
+      current_node = next_node;
+      //printf("hello2");
       list->length -= 1;       
     }
     // Handle the rest of the list
     while(current_node->next != NULL){
       if(current_node->next->value == value){
-	List_node *true_next_node = current_node->next->next;
-	free ( current_node->next ); // Delete the node.
-	current_node->next = true_next_node; // Point to the actual next node
-
-	list->length -= 1;
-      }
+	  List_node *true_next_node = current_node->next->next;
+	  free ( current_node->next ); // Delete the node.
+	  current_node->next = true_next_node; // Point to the actual next node
+	  list->length -= 1;
+	}      
       if (current_node->next != NULL){
 	current_node = current_node->next;
       }
     }
+
+    /*    //Handles the end
+    if(current_node->next == NULL && current_node->value == value){
+      printf("hello");
+        free( current_node);
+	//current_node->next = NULL;
+	list->length -= 1;
+      }
+    */
+    
   }
   /* Delete all occurrences of the value 'value' in list.
    * For example, starting with { 0 -> 5 -> 4 -> 5 }
@@ -123,7 +135,14 @@ void list_delete( List *list, int value ) {
 }
 
 // Implement this
-//void list_apply( List *list, int (*function_ptr)(int) ) {
+void list_apply( List *list, int (*function_ptr)(int) ) {
+  List_node *current_node = list->front;
+
+  while (current_node != NULL){
+    current_node->value = function_ptr(current_node->value);    
+    current_node = current_node->next;
+  }
+
   /* Applies the function pointed to by function_ptr
    * to every value at nodes in list 'list'.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -134,11 +153,11 @@ void list_delete( List *list, int value ) {
    * call to list_apply( list, sq );
    * results in { 1 -> 4 -> 9 }
    */
-//}
+  }
 
 
 
-// int list_reduce( List *list, int (*function_ptr)(int, int) ) {
+ int list_reduce( List *list, int (*function_ptr)(int, int) ) {
   /* Takes an associative function pointed to by function_ptr
    * and returns the result of reducing the list with it.
    * For example, starting with { 1 -> 2 -> 3 } and
@@ -149,9 +168,18 @@ void list_delete( List *list, int value ) {
    * list_reduce( list, plus );
    * will return 1 + 2 + 3 = 6.
    */
-//  return result;
-//}
-// DONT FORGET TO UNCOMMENT THIS
+   int result = 0;
+   List_node *current_node = list->front;
+   while (current_node != NULL){
+     int y = 0;
+     y = current_node->value;
+     result = function_ptr(result,y);
+     current_node = current_node->next;
+   }
+
+  return result;
+}
+
 
 
 // Print out a linked list in human-readable form

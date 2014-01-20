@@ -93,24 +93,47 @@ void list_delete( List *list, int value ) {
   List_node *current_node = list->front;
   if (current_node != NULL){
     // Handle the front of the list
-    if (current_node->value == value){  
-      List_node *next_node = current_node->next;  
+    while (current_node->value == value){  
+      List_node * next_node = (current_node->next);  
       free( current_node ); // Free memory
       list->front = next_node; // Reassign new front
+      current_node = next_node;
+      //printf("hello2");
       list->length -= 1;       
     }
-    // Handle the rest of the list
+    // Handle the middle of the list
     while(current_node->next != NULL){
       if(current_node->next->value == value){
-	List_node *true_next_node = current_node->next->next;
-	free ( current_node->next ); // Delete the node.
-	current_node->next = true_next_node; // Point to the actual next node
-	list->length -= 1;
-      }
+	  List_node *true_next_node = current_node->next->next;
+	  free ( current_node->next ); // Delete the node.
+	  current_node->next = true_next_node; // Point to the actual next node
+	  list->length -= 1;
+	}      
       if (current_node->next != NULL){
+	if(current_node->next->next == NULL){
+	  break;
+	}
 	current_node = current_node->next;
       }
     }
+
+    if (current_node->next != NULL){
+      if (current_node->next->value == value){
+	free( current_node->next ); // Free memory
+	current_node->next = NULL; // Reassign new front
+	list->length -= 1;
+      }
+    }
+
+    /*    //Handles the end
+    if(current_node->next == NULL && current_node->value == value){
+      printf("hello");
+        free( current_node);
+	//current_node->next = NULL;
+	list->length -= 1;
+      }
+    */
+    
   }
   /* Delete all occurrences of the value 'value' in list.
    * For example, starting with { 0 -> 5 -> 4 -> 5 }
@@ -166,7 +189,7 @@ void list_apply( List *list, int (*function_ptr)(int) ) {
 
   return result;
 }
-// DONT FORGET TO UNCOMMENT THIS
+
 
 
 // Print out a linked list in human-readable form

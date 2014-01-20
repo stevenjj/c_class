@@ -17,14 +17,22 @@ int main(void) {
     list_append( &list, i );
   }
   list_print( list );
-  list_insert_before( &list, 100,4);
+  list_insert_before( &list, 100,0);
+  //  list_insert_before( &list, 100,4);
+  list_insert_before( &list, 100,100);
+  //list_insert_before( &list, 100,2);
   list_print( list );
 
   list_delete( &list, 4);
-  list_apply( &list,  &sq);
+  //  list_apply( &list,  &sq);
   list_print( list );
+  list_delete( &list, 100);
+  list_print( list );
+  
 
-  printf("result = %d", list_reduce( &list, &plus));
+
+
+  printf("result = %d\n", list_reduce( &list, &plus));
 
   list_clear( &list );
   return 0;

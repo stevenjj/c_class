@@ -93,14 +93,18 @@ void list_delete( List *list, int value ) {
   List_node *current_node = list->front;
   if (current_node != NULL){
     // Handle the front of the list
-    while (current_node->value == value){  
-      List_node * next_node = (current_node->next);  
-      free( current_node ); // Free memory
-      list->front = next_node; // Reassign new front
-      current_node = next_node;
-      //printf("hello2");
-      list->length -= 1;       
-    }
+      while (current_node->value == value){  
+	List_node * next_node = (current_node->next);  
+	free( current_node ); // Free memory
+	list->front = next_node; // Reassign new front
+	current_node = next_node;
+	//printf("hello2");
+	list->length -= 1; 
+	if (current_node == NULL){
+	  break;
+	}
+      }
+  if (current_node != NULL){
     // Handle the middle of the list
     while(current_node->next != NULL){
       while(current_node->next->value == value && current_node->next->next != NULL){
@@ -124,6 +128,7 @@ void list_delete( List *list, int value ) {
 	list->length -= 1;
       }
     }
+  }//
 
     /*    //Handles the end
     if(current_node->next == NULL && current_node->value == value){

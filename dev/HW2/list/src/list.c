@@ -103,7 +103,7 @@ void list_delete( List *list, int value ) {
     }
     // Handle the middle of the list
     while(current_node->next != NULL){
-      if(current_node->next->value == value){
+      while(current_node->next->value == value && current_node->next->next != NULL){
 	  List_node *true_next_node = current_node->next->next;
 	  free ( current_node->next ); // Delete the node.
 	  current_node->next = true_next_node; // Point to the actual next node

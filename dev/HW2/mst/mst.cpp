@@ -95,6 +95,7 @@ bool in_list_of_vectors(const std::vector<size_t>  visited_nodes, const size_t n
   for(size_t i = 0 ; i < visited_nodes.size(); i++){
     if (visited_nodes[i] == node){
       in_vector = true;
+      break;
     }
   }
   return in_vector;

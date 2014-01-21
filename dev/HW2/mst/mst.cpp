@@ -71,7 +71,7 @@ void AdjacencyList::print() {
 
 
 bool operator<( const State &a, const State &b ){
-  if (a.dist() < b.dist()){
+  if (b.dist() < a.dist()){
     return true;
   }
   return false;
@@ -79,14 +79,62 @@ bool operator<( const State &a, const State &b ){
 
 
 
+bool in_list_of_vectors(const std::vector<size_t>  &visited_nodes, const size_t &node){
+  if(std::find(visited_nodes.begin(), visited_nodes.end(), node) != visited_nodes.end()) {
+     printf("node is in list of vectors\n");
+     return true;
+      /* v contains x */
+  } else {
+     printf("node is NOT in list of vectors\n");
+     /* v does not contain x */
+     return false;
+  }
+}
 
 double prim( const AdjacencyList &adj ) {
  double weight = 0.0;
  std::priority_queue<State> pq;
  printf("node:%zu, value:%f\n", adj.vert(0)[0].node() , adj.vert(0)[0].dist() );
  printf("node:%zu, value:%f\n", adj.vert(0)[1].node() , adj.vert(0)[1].dist() );
+
+ 
+ // if (adj.vert(0)[0] < adj.vert(0)[1]){ // Operator < overload works
+ //  std::cout << "hello world!";
+ // }
+ std::cout << "Size of Adjacency is:" << adj.size() << "\n" ;
+ if (adj.size() == 0){
+   return weight; // Return 0.0
+ }
+
+ std::vector<size_t> visited_nodes;
+
+ // Initialize with one node.
+ pq.push(adj.vert(0)[0]); // Initialize
+ pq.push(adj.vert(0)[1]);
+
+ 
+  while( !pq.empty() ){
+    std::cout << "Top node is:" <<  pq.top().node() << "\n";
+    std::cout << "Size of pq is" << pq.size() << "\n";
+    std::cout << "Number of neighbors of top node is:" << adj.vert(pq.top().node()).size() << "\n";
+    
+    size_t node = pq.top().node(); // Store node
+    pq.pop(); // Remove node in priority queue;
+
+
+    //    if ( !in_list_of_vectors(visited_nodes, node)); // Check if it's in visited nodes
+    	 visited_nodes.push_back( node ) ; // Mark node as visited
+	 // Add its neightbors
+    //    for(i = 0; i < adj.vert(node).size(); ++i){
+          
+    // }
+
+    break;
+  }
+
+
   // Suggested starting point:
-  //  std::priority_queue<State> pq;
+  //  std::priority_queue<State> pq;r
   //   NOTE: you will need to overload a operator<
   //   for State objects, since priority_queue<> requires that
   //   its members be comparable!

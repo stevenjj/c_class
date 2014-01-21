@@ -83,7 +83,8 @@ bool operator<( const State &a, const State &b ){
 double prim( const AdjacencyList &adj ) {
  double weight = 0.0;
  std::priority_queue<State> pq;
- std::cout << adj.vert(0).node() << adj.vert(0).dist();
+ printf("node:%zu, value:%f\n", adj.vert(0)[0].node() , adj.vert(0)[0].dist() );
+ printf("node:%zu, value:%f\n", adj.vert(0)[1].node() , adj.vert(0)[1].dist() );
   // Suggested starting point:
   //  std::priority_queue<State> pq;
   //   NOTE: you will need to overload a operator<
@@ -114,7 +115,7 @@ int main() {
     // So that we print 10 fixed digits of precision
     adj.print();
     output << std::fixed << std::setprecision( 8 );
-    //output << prim( adj ) << "\n";
+    output << prim( adj ) << "\n";
   } else {
     std::cerr << "Could not open mst.in\n";
     return 1;

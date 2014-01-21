@@ -78,58 +78,114 @@ bool operator<( const State &a, const State &b ){
 }
 
 
+struct my_compare {
+  bool operator()(const State &a, const State &b){
+    if (b.dist() <= a.dist()){
+      return true;
+    }else{
+      return false;
+    }
 
-bool in_list_of_vectors(const std::vector<size_t>  &visited_nodes, const size_t &node){
+  }
+};
+
+
+bool in_list_of_vectors(const std::vector<size_t>  visited_nodes, const size_t node){
+  bool in_vector = false;
+  for(size_t i = 0 ; i < visited_nodes.size(); i++){
+    if (visited_nodes[i] == node){
+      in_vector = true;
+    }
+  }
+  return in_vector;
+    /*
   if(std::find(visited_nodes.begin(), visited_nodes.end(), node) != visited_nodes.end()) {
-     printf("node is in list of vectors\n");
+    //    std::cout << "Node:" << node << " is in list of vectors\n" ;
      return true;
-      /* v contains x */
   } else {
-     printf("node is NOT in list of vectors\n");
-     /* v does not contain x */
+    // std::cout << "Node:" << node << " is NOT in list of vectors\n" ;
      return false;
   }
+    */
+}
+
+void initialize_pq( std::priority_queue<State, std::vector<State>, my_compare> &pq, 
+                    std::vector<size_t> &visited_nodes, const AdjacencyList &adj, const size_t &initial_node,  
+                    std::vector<State> &inpq){
+  visited_nodes.push_back(initial_node);
+  for(size_t i = 0; i < adj.vert(initial_node).size(); ++i){
+    pq.push(adj.vert(initial_node)[i]);
+    inpq.push_back(adj.vert(initial_node)[i]);
+    // std::cout << adj.vert(initial_node)[i].node() << "ADD THIS NODE TO INITIALIZED PQ\n";
+  }
+	    
+}
+
+
+
+void print_inpq(const std::vector<State> inpq){
+  std::cout << "PQ has:\n";
+  for( size_t i = 0; i < inpq.size(); ++i){
+     std::cout << "(" << inpq[i].node() << ", " << inpq[i].dist() << ") \n";
+    }
+  
 }
 
 double prim( const AdjacencyList &adj ) {
  double weight = 0.0;
- std::priority_queue<State> pq;
- printf("node:%zu, value:%f\n", adj.vert(0)[0].node() , adj.vert(0)[0].dist() );
- printf("node:%zu, value:%f\n", adj.vert(0)[1].node() , adj.vert(0)[1].dist() );
 
- 
- // if (adj.vert(0)[0] < adj.vert(0)[1]){ // Operator < overload works
- //  std::cout << "hello world!";
- // }
- std::cout << "Size of Adjacency is:" << adj.size() << "\n" ;
+  std::priority_queue<State, std::vector<State>, my_compare> pq;
+ // printf("node:%zu, value:%f\n", adj.vert(0)[0].node() , adj.vert(0)[0].dist() );
+ // printf("node:%zu, value:%f\n", adj.vert(0)[1].node() , adj.vert(0)[1].dist() ); 
+ // std::cout << "Size of Adjacency is:" << adj.size() << "\n" ;
+
  if (adj.size() == 0){
    return weight; // Return 0.0
  }
 
  std::vector<size_t> visited_nodes;
+ std::vector<State> inpq;
 
- // Initialize with one node.
- pq.push(adj.vert(0)[0]); // Initialize
- pq.push(adj.vert(0)[1]);
-
+ // Initialize priority queue with one node.
+ size_t current_node = 0;
+ initialize_pq(pq, visited_nodes, adj, current_node, inpq);
+ // print_inpq(inpq);
  
+
   while( !pq.empty() ){
-    std::cout << "Top node is:" <<  pq.top().node() << "\n";
-    std::cout << "Size of pq is" << pq.size() << "\n";
-    std::cout << "Number of neighbors of top node is:" << adj.vert(pq.top().node()).size() << "\n";
+    //    std::cout << "Top node is " <<  pq.top().node() << "\n";
+    // std::cout << "Size of pq is " << pq.size() << "\n";
+    //std::cout << "Number of neighbors of top node is " << adj.vert(pq.top().node()).size() << "\n";
     
-    size_t node = pq.top().node(); // Store node
+    size_t node = pq.top().node(); // Store minimum dist node
+    double dist = pq.top().dist(); // Store distance from prev node to to minimum dist node
+
     pq.pop(); // Remove node in priority queue;
 
+    
+       if ( !in_list_of_vectors(visited_nodes, node)){ // Check if it's in visited nodes
+    	 visited_nodes.push_back( node ) ; // Mark node as visited so we don't check its edges again
 
-    //    if ( !in_list_of_vectors(visited_nodes, node)); // Check if it's in visited nodes
-    	 visited_nodes.push_back( node ) ; // Mark node as visited
-	 // Add its neightbors
-    //    for(i = 0; i < adj.vert(node).size(); ++i){
-          
-    // }
+	 weight += dist;
+	 // current_node = node;
+	 //  Add its neightbors
+        for(size_t i = 0; i < adj.vert(node).size(); ++i){
+	  //  std::cout << "current iter: " << i << "\n"; 
 
-    break;
+	  State neighbor = adj.vert(node)[i];
+	  if (!in_list_of_vectors(visited_nodes, neighbor.node())){ 
+	     pq.push(neighbor); // Add neighbor to pq if it it hasn't been visited	    
+	     inpq.push_back(neighbor);
+
+	     // std::cout << neighbor.node() << "\n";
+	      }
+	}
+	//	print_inpq(inpq);
+	//std::cout << "current weight is = " << weight << "\n";
+
+	    }
+    
+
   }
 
 
@@ -149,9 +205,10 @@ double prim( const AdjacencyList &adj ) {
   //    problem statement!
   // }
 
+  //  std::cout << weight << "\n";
   return weight;
 }
-
+ 
 
 int main() {
   
@@ -161,9 +218,9 @@ int main() {
   if( input.is_open() ) {
     auto adj = AdjacencyList{ input };
     // So that we print 10 fixed digits of precision
-    adj.print();
+    //    adj.print();
     output << std::fixed << std::setprecision( 8 );
-    output << prim( adj ) << "\n";
+        output << prim( adj ) << "\n";
   } else {
     std::cerr << "Could not open mst.in\n";
     return 1;

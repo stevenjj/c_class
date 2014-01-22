@@ -49,6 +49,10 @@ inline Rational operator*( const Rational &a, const Rational &b ) {
 }
 
 inline Rational operator+( const Rational &a, const Rational &b ) {
+  intmax_t num = (a.num()*b.den()) + (b.num()*a.den());
+  intmax_t den = a.den()*b.den();
+  return Rational{ num, den } ;
+
   // You should implement
 }
 

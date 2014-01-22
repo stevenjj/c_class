@@ -15,9 +15,11 @@ int main() {
   std::cout << c << "\n";
   std::cout << d << "\n";
   std::cout << e << "\n";
-  /* 
+  
   std::cout << a << " * " << b << " = " << a * b << "\n";
-  std::cout << "Now for something more complicated...\n";
+  std::cout << a << " + " << c << " = " << a + c << "\n";
+  /*
+  std::cout << "Now for something more complicated...\n";  
   std::cout << "a / ( a + b / a ) = " << a / ( a + b / a ) << "\n";
 
   auto phi = Rational{ 1 };

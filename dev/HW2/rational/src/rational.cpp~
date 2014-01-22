@@ -12,6 +12,12 @@ const Rational Rational::inverse() const {
 
 // Implement this
 Rational::sign_type Rational::sign() const {
+  if (this->_num >= 0){
+    return Rational::POSITIVE;
+  }
+  else{
+    return Rational::NEGATIVE;
+  }
   /* Return, as a sign_type, the sign of the Rational */
 }
 
@@ -44,9 +50,23 @@ std::ostream& operator<<( std::ostream &os, const Rational &ratio ) {
  * to set one with a zero denominator.
  */
 void Rational::normalize() {
-  intmax_t num = this.num();
-  intmax_t den = this.den();
-  std::cout << num << den << gcd(this.num(), this.den());
+  intmax_t num = this->_num;
+  intmax_t den = this->_den;
+
+  if ( (num < 0 && den < 0) ||  (num > 0 && den < 0) ){
+    this->_num = this->_num *-1;
+    this->_den = this->_den *-1;
+    num *= -1; // Make numerator positive/negative
+    den *= -1; // Make denom always positive
+
+  }
+  if (num < 0){
+    num *= -1; //Make it num positive
+  }
+  intmax_t gcd_number = gcd(num, den);
+  this->_num /= gcd_number; 
+  this->_den /= gcd_number;
+
   // You should implement
 }
 

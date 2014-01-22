@@ -8,6 +8,7 @@
 // Implement this
 const Rational Rational::inverse() const {
   /* Return the Rational number 1 / current rational */
+  return Rational{this->den(), this->num() };
 }
 
 // Implement this

@@ -28,10 +28,18 @@ public:
 std::ostream& operator<<( std::ostream &os, const Rational &ratio );
 
 inline bool operator==( const Rational &lhs, const Rational &rhs ) {
+  if ( (lhs.num() == rhs.num()) && (lhs.den() == rhs.den()) ){
+    return true;
+  }
+  return false;
   // You should implement
 }
 
 inline bool operator<( const Rational &lhs, const Rational &rhs ) {
+  if ( (lhs.num()*rhs.den()) < (rhs.num()*lhs.den()) ){
+      return true;      
+  }
+  return false;
   // You should implement
 }
 
@@ -57,10 +65,14 @@ inline Rational operator+( const Rational &a, const Rational &b ) {
 }
 
 inline Rational operator-( const Rational &a, const Rational &b ) {
+  intmax_t num = (a.num()*b.den()) - (b.num()*a.den());
+  intmax_t den = a.den()*b.den();
+  return Rational{ num, den } ;
   // You should implement
 }
 
 inline Rational operator/( const Rational &a, const Rational &b ) {
+  return Rational{ a.num()*b.den(), a.den()*b.num() } ;
   // You should implement
 }
 

@@ -17,7 +17,10 @@ int main() {
   std::cout << e << "\n";
   
   std::cout << a << " * " << b << " = " << a * b << "\n";
-  std::cout << a << " + " << c << " = " << a + c << "\n";
+  std::cout << a << " / " << c << " = " << a / c << "\n";
+  std::cout << b << " == " << c << " is " << (b == c) << "\n";
+  std::cout << a << " < " << d << " is " << (a < d) << "\n";
+  std::cout << d << " inverse " << " is " << d.inverse() << "\n";
   /*
   std::cout << "Now for something more complicated...\n";  
   std::cout << "a / ( a + b / a ) = " << a / ( a + b / a ) << "\n";

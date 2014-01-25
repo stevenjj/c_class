@@ -76,9 +76,7 @@ void List::apply( const ApplyFunction &interface ) {
 
 // See reduce.cpp
 int List::reduce( const ReduceFunction &interface ) const {
-  // if (length() == 0){
-  //  return 0;
-  //}
+
   return interface.reduce( *this );
 }
 

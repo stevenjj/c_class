@@ -20,7 +20,7 @@ class List {
 
 public: 
   // The empty constructor should create an empty list (length 0)
- List() : _list{} {};
+  List();
 
   // The destructor should clean up everything- no memory leaks!
   ~List();

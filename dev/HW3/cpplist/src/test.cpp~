@@ -14,7 +14,7 @@ int main() {
   list.print();
   list.insertBefore(5,0);
   list.print();  
-  list.deleteAll(0);
+  //list.deleteAll(0);
   list.print();  
   
   list.apply(SquareApply());

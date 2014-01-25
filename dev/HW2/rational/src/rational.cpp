@@ -51,20 +51,24 @@ std::ostream& operator<<( std::ostream &os, const Rational &ratio ) {
  * to set one with a zero denominator.
  */
 void Rational::normalize() {
-  intmax_t num = this->_num;
-  intmax_t den = this->_den;
+  intmax_t num_try = this->_num;
+  intmax_t den_try = this->_den;
 
-  if ( (num < 0 && den < 0) ||  (num > 0 && den < 0) ){
+  if (den_try == 0){
+    throw bad_rational();
+    }
+
+  if ( (num_try < 0 && den_try < 0) ||  (num_try > 0 && den_try < 0) ){
     this->_num = this->_num *-1;
     this->_den = this->_den *-1;
-    num *= -1; // Make numerator positive/negative
-    den *= -1; // Make denom always positive
+    num_try *= -1; // Make numerator positive/negative
+    den_try *= -1; // Make denom always positive
 
   }
-  if (num < 0){
-    num *= -1; //Make it num positive
+  if (num_try < 0){
+    num_try *= -1; //Make it num positive
   }
-  intmax_t gcd_number = gcd(num, den);
+  intmax_t gcd_number = gcd(num_try, den_try);
   this->_num /= gcd_number; 
   this->_den /= gcd_number;
 
@@ -73,10 +77,16 @@ void Rational::normalize() {
 
 // Return the float precision number corresponding to the Rational
 float Rational::to_float() const {
+  float num_try = (float) (this->num());
+  float den_try = (float) (this->den());
+  return num_try/den_try;
   // You should implement
 }
 
 // Return the double precision number corresponding to the Rational
 double Rational::to_double() const {
+  double num_try = (double) (this->num());
+  double den_try = (double) (this->den());
+  return num_try/den_try;
   // You should implement
 }

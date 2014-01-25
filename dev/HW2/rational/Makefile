@@ -5,8 +5,8 @@ CXX := clang++
 
 COMPILER_OPTIONS := -m64 -Wall -Wextra -Wshadow -Werror -pedantic -Iinclude
 CFLAGS := -std=c99 $(COMPILER_OPTIONS)
-#CXXFLAGS := -std=c++11 -stdlib=libc++ -Weffc++ $(COMPILER_OPTIONS)
-CXXFLAGS := -std=c++11 -stdlib=libc++ -w $(COMPILER_OPTIONS)
+CXXFLAGS := -std=c++11 -stdlib=libc++ -Weffc++ $(COMPILER_OPTIONS)
+#CXXFLAGS := -std=c++11 -stdlib=libc++ -w $(COMPILER_OPTIONS)
 #CXXFLAGS := -Weffc++ $(COMPILER_OPTIONS)
 LDFLAGS := -lm
 

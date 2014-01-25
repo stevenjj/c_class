@@ -72,6 +72,9 @@ inline Rational operator-( const Rational &a, const Rational &b ) {
 }
 
 inline Rational operator/( const Rational &a, const Rational &b ) {
+  //  if (a.den() == 0 || b.den() == 0){
+  //  throw bad_rational();
+  // }
   return Rational{ a.num()*b.den(), a.den()*b.num() } ;
   // You should implement
 }

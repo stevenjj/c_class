@@ -186,6 +186,16 @@ void list_apply( List *list, int (*function_ptr)(int) ) {
    int result = 0;
    List_node *current_node = list->front;
    while (current_node != NULL){
+     if (list->length == 0){
+       result = 0;
+       break;
+     }     
+
+     if (list->length == 1){
+       result = list->front->value;
+       break;
+     }
+
      int y = 0;
      y = current_node->value;
      result = function_ptr(result,y);

@@ -21,7 +21,9 @@ int main() {
   std::cout << b << " == " << c << " is " << (b == c) << "\n";
   std::cout << a << " < " << d << " is " << (a < d) << "\n";
   std::cout << d << " inverse " << " is " << d.inverse() << "\n";
-  /*
+  std::cout << d << " to float " << " is " << d.to_float() << "\n";  
+  std::cout << d << " to double " << " is " << d.to_double() << "\n";  
+  
   std::cout << "Now for something more complicated...\n";  
   std::cout << "a / ( a + b / a ) = " << a / ( a + b / a ) << "\n";
 
@@ -32,6 +34,6 @@ int main() {
   }
   std::cout << std::setprecision( 15 );
   std::cout << "phi = " << ( 1 + phi ).to_double() << "\n";
-  */
+  
   return 0;
 }

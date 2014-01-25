@@ -166,19 +166,14 @@ double prim( const AdjacencyList &adj ) {
     
        if ( !in_list_of_vectors(visited_nodes, node)){ // Check if it's in visited nodes
     	 visited_nodes.push_back( node ) ; // Mark node as visited so we don't check its edges again
-
 	 weight += dist;
-	 // current_node = node;
 	 //  Add its neightbors
         for(size_t i = 0; i < adj.vert(node).size(); ++i){
-	  //  std::cout << "current iter: " << i << "\n"; 
-
 	  State neighbor = adj.vert(node)[i];
 	  if (!in_list_of_vectors(visited_nodes, neighbor.node())){ 
 	     pq.push(neighbor); // Add neighbor to pq if it it hasn't been visited	    
 	     inpq.push_back(neighbor);
 
-	     // std::cout << neighbor.node() << "\n";
 	      }
 	}
 	//	print_inpq(inpq);

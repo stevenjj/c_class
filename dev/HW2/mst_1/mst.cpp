@@ -90,18 +90,19 @@ double prim( const AdjacencyList &adj ) {
 }
 */
 int main() {
-  /*  std::ifstream input{ "mst.in" };
+    std::ifstream input{ "mst.in" };
   std::ofstream output{ "mst.out" };
 
   if( input.is_open() ) {
     auto adj = AdjacencyList{ input };
     // So that we print 10 fixed digits of precision
+    adj.print();
     output << std::fixed << std::setprecision( 8 );
-    output << prim( adj ) << "\n";
+    //  output << prim( adj ) << "\n";
   } else {
     std::cerr << "Could not open mst.in\n";
     return 1;
   }
-  */
+  
   return 0;
 }
